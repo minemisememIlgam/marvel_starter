@@ -10,15 +10,21 @@ function RandomChar() {
   const [thumbnail, setThumbnail] = useState([]);
   const [homepage, setHomepage] = useState(null);
   const [wiki, setWiki] = useState(null);
+  const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
+  console.log(id);
   useEffect(() => {
     fetch(
-      "https://gateway.marvel.com:443/v1/public/characters/1011196?apikey=27bdb1fe4071f56de731760787b2d82f"
+      `https://gateway.marvel.com:443/v1/public/characters/${id}?apikey=27bdb1fe4071f56de731760787b2d82f`
     )
       .then((res) => res.json())
       .then((json) => {
         setName(json.data.results[0].name);
         setDescription(json.data.results[0].description);
-        setThumbnail(json.data.results[0].thumbnail.path + ".jpg");
+        setThumbnail(
+          json.data.results[0].thumbnail.path +
+            "." +
+            json.data.results[0].thumbnail.extension
+        );
         setHomepage(json.data.results[0].urls[0].url);
         setWiki(json.data.results[0].urls[1].url);
       });
@@ -36,11 +42,11 @@ function RandomChar() {
           <p className="randomchar__name">{name}</p>
           <p className="randomchar__descr">{description}</p>
           <div className="randomchar__btns">
-            <a href="#" className="button button__main">
-              <div className={homepage}>homepage</div>
+            <a href={homepage} className="button button__main">
+              <div className="inner">homepage</div>
             </a>
-            <a href="#" className="button button__secondary">
-              <div className={wiki}>Wiki</div>
+            <a href={wiki} className="button button__secondary">
+              <div className="inner">Wiki</div>
             </a>
           </div>
         </div>
