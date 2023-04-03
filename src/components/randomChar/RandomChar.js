@@ -4,14 +4,13 @@ import thor from "../../resources/img/thor.jpeg";
 import mjolnir from "../../resources/img/mjolnir.png";
 import MarvelService from "../../services/MarvelService";
 
-function RandomChar() {
+function RandomChar({ id }) {
   const [name, setName] = useState(null);
   const [description, setDescription] = useState(null);
   const [thumbnail, setThumbnail] = useState([]);
   const [homepage, setHomepage] = useState(null);
   const [wiki, setWiki] = useState(null);
-  const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
-  console.log(id);
+
   useEffect(() => {
     fetch(
       `https://gateway.marvel.com:443/v1/public/characters/${id}?apikey=27bdb1fe4071f56de731760787b2d82f`
@@ -40,7 +39,11 @@ function RandomChar() {
         />
         <div className="randomchar__info">
           <p className="randomchar__name">{name}</p>
-          <p className="randomchar__descr">{description}</p>
+          <p className="randomchar__descr">
+            {description
+              ? description
+              : "Sorry, we dont have information about this character"}
+          </p>
           <div className="randomchar__btns">
             <a href={homepage} className="button button__main">
               <div className="inner">homepage</div>
