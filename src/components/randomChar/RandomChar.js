@@ -3,8 +3,8 @@ import "./randomChar.scss";
 import thor from "../../resources/img/thor.jpeg";
 import mjolnir from "../../resources/img/mjolnir.png";
 import MarvelService from "../../services/MarvelService";
-
-function RandomChar({ id }) {
+import Spinner from "../../components/spinner/Spinner";
+function RandomChar({ id, setLoading }) {
   const [name, setName] = useState(null);
   const [description, setDescription] = useState(null);
   const [thumbnail, setThumbnail] = useState([]);
@@ -26,8 +26,9 @@ function RandomChar({ id }) {
         );
         setHomepage(json.data.results[0].urls[0].url);
         setWiki(json.data.results[0].urls[1].url);
+        setLoading(true);
       });
-  }, []);
+  });
 
   return (
     <div className="randomchar">
@@ -54,6 +55,7 @@ function RandomChar({ id }) {
           </div>
         </div>
       </div>
+
       <div className="randomchar__static">
         <p className="randomchar__title">
           Random character for today!
