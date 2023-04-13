@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import "./randomChar.scss";
-import thor from "../../resources/img/thor.jpeg";
+import axios from "axios";
 import mjolnir from "../../resources/img/mjolnir.png";
-import MarvelService from "../../services/MarvelService";
 
 function RandomChar({ id }) {
   const [name, setName] = useState(null);
@@ -29,12 +28,16 @@ function RandomChar({ id }) {
         setWiki(json.data.results[0].urls[1].url);
         setIsLoading(false);
       });
-  }, []);
+  }, [id]);
+
+  const [count, setCount] = useState(0);
+
+ 
 
   return (
     <div className="randomchar">
       {isLoading ? (
-        "Loading!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+        "Loading ALER GKS: DLMFFFFFFFFFFFFFFFFFFFFFFF!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
       ) : (
         <div>
           <img
@@ -60,7 +63,7 @@ function RandomChar({ id }) {
           </div>
           <div className="randomchar__static">
             <p className="randomchar__title">
-              Random character for today!
+              Random character for today! counter {count}
               <br />
               Do you want to get to know him better?
             </p>
@@ -68,14 +71,10 @@ function RandomChar({ id }) {
             <button className="button button__main">
               <div className="inner">try it</div>
             </button>
-            <img
-              src={mjolnir}
-              alt="mjolnir"
-              className="randomchar__decoration"
-            />
           </div>
         </div>
       )}
+      <img src={mjolnir} alt="mjolnir" className="randomchar__decoration" />
     </div>
   );
 }
