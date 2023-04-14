@@ -7,18 +7,18 @@ import MarvelService from "../../services/MarvelService";
 const CharList = ({ id }) => {
   const [char, setChar] = useState();
   const [thumbnail, setThumbnail] = useState([]);
+
   useEffect(() => {
     fetch(
       `https://gateway.marvel.com:443/v1/public/characters/${id}?apikey=27bdb1fe4071f56de731760787b2d82f`
     )
-      .then((res) => res.json())
+      .then((response) => response.json())
       .then((json) => {
         setChar(json.data.results[0].name);
         setThumbnail(json.data.results[0].thumbnail.path + ".jpg");
       });
-  }, []);
-
-  console.log({ char });
+  }, [id]);
+  console.log({ thumbnail });
 
   return (
     <div className="char__list">
