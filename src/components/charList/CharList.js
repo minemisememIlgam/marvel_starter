@@ -1,68 +1,48 @@
 import "./charList.scss";
 import { useState } from "react";
 import { useEffect } from "react";
-import abyss from "../../resources/img/abyss.jpg";
 
-import MarvelService from "../../services/MarvelService";
 const CharList = ({ id }) => {
-  const [char, setChar] = useState();
-  const [thumbnail, setThumbnail] = useState([]);
+  const [characterIds, setCharacterIds] = useState([]);
 
   useEffect(() => {
     fetch(
-      `https://gateway.marvel.com:443/v1/public/characters/${id}?apikey=27bdb1fe4071f56de731760787b2d82f`
+      "https://gateway.marvel.com:443/v1/public/characters?apikey=27bdb1fe4071f56de731760787b2d82f"
     )
       .then((response) => response.json())
       .then((json) => {
-        setChar(json.data.results[0].name);
-        setThumbnail(json.data.results[0].thumbnail.path + ".jpg");
+        const ids = json.data.results.map((result) => result.id);
+        setCharacterIds(ids.slice(0, 5));
       });
-  }, [id]);
-  console.log({ thumbnail });
+  }, []);
+
+  const [characters, setCharacters] = useState([]);
+
+  useEffect(() => {
+    Promise.all(
+      characterIds.map((id) =>
+        fetch(
+          `https://gateway.marvel.com:443/v1/public/characters/${id}?apikey=27bdb1fe4071f56de731760787b2d82f`
+        ).then((response) => response.json())
+      )
+    ).then((data) => {
+      setCharacters(data);
+    });
+  }, [characterIds]);
 
   return (
     <div className="char__list">
       <ul className="char__grid">
-        <li className="char__item">
-          <img src={thumbnail} alt="abyss" />
-          <div className="char__name">{char}</div>
-        </li>
-        <li className="char__item char__item_selected">
-          <img src={thumbnail} alt="abyss" />
-          <div className="char__name">{char}</div>
-        </li>
-        <li className="char__item">
-          <img src={abyss} alt="abyss" />
-          <div className="char__name">{char}</div>
-        </li>
-        <li className="char__item">
-          <img src={abyss} alt="abyss" />
-          <div className="char__name">Abyss</div>
-        </li>
-        <li className="char__item">
-          <img src={abyss} alt="abyss" />
-          <div className="char__name">Abyss</div>
-        </li>
-        <li className="char__item">
-          <img src={abyss} alt="abyss" />
-          <div className="char__name">Abyss</div>
-        </li>
-        <li className="char__item">
-          <img src={abyss} alt="abyss" />
-          <div className="char__name">Abyss</div>
-        </li>
-        <li className="char__item">
-          <img src={abyss} alt="abyss" />
-          <div className="char__name">Abyss</div>
-        </li>
-        <li className="char__item">
-          <img src={abyss} alt="abyss" />
-          <div className="char__name">Abyss</div>
-        </li>
+        {characters.map((character) => (
+          <li className="char__item" key={character.data.results[0].id}>
+            <img
+              src={character.data.results[0].thumbnail.path + `.jpg`}
+              alt={character.data.results[0].name}
+            />
+            <div className="char__name">{character.data.results[0].name}</div>
+          </li>
+        ))}
       </ul>
-      <button className="button button__main button__long">
-        <div className="inner">load more</div>
-      </button>
     </div>
   );
 };
