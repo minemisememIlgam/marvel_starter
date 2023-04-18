@@ -1,10 +1,12 @@
 import "./charList.scss";
 import { useState } from "react";
 import { useEffect } from "react";
-
-const CharList = ({ id }) => {
+import image1 from "../../resources/img/image1.png";
+const CharList = ({ id, onCharClick }) => {
   const [characterIds, setCharacterIds] = useState([]);
-
+  const handleImageClick = (char) => {
+    onCharClick(char);
+  };
   useEffect(() => {
     fetch(
       "https://gateway.marvel.com:443/v1/public/characters?apikey=27bdb1fe4071f56de731760787b2d82f"
@@ -32,6 +34,12 @@ const CharList = ({ id }) => {
 
   return (
     <div className="char__list">
+      <img
+        src={image1}
+        alt="Char 1"
+        onClick={() => handleImageClick("Char 1")}
+      />
+
       <ul className="char__grid">
         {characters.map((character) => (
           <li className="char__item" key={character.data.results[0].id}>
