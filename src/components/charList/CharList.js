@@ -34,18 +34,13 @@ const CharList = ({ id, onCharClick }) => {
 
   return (
     <div className="char__list">
-      <img
-        src={image1}
-        alt="Char 1"
-        onClick={() => handleImageClick("Char 1")}
-      />
-
       <ul className="char__grid">
         {characters.map((character) => (
           <li className="char__item" key={character.data.results[0].id}>
             <img
               src={character.data.results[0].thumbnail.path + `.jpg`}
               alt={character.data.results[0].name}
+              onClick={() => handleImageClick(character.data.results[0].name)}
             />
             <div className="char__name">{character.data.results[0].name}</div>
           </li>

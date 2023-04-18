@@ -19,8 +19,8 @@ const App = () => {
       <main>
         <RandomChar id={id} />
         <div className="char__content">
-          <CharList id={id} onCharClick = {handleCharClick} />
-          <CharInfo selectChar = {selectedChar} />
+          <CharList id={id} onCharClick={handleCharClick} />
+          <CharInfo selectChar={selectedChar} />
         </div>
         <img className="bg-decoration" src={decoration} alt="vision" />
       </main>
