@@ -1,20 +1,22 @@
 import "./charList.scss";
 import { useState } from "react";
 import { useEffect } from "react";
-import image1 from "../../resources/img/image1.png";
-const CharList = ({ id, onCharClick }) => {
+const CharList = ({ id, wasClickedOnCharacter }) => {
   const [characterIds, setCharacterIds] = useState([]);
-  const handleImageClick = (char) => {
-    onCharClick(char);
+  const limit = 30;
+  const totalCharacters = 1493;
+  const wasClickedOnImageCharacter = (characterss) => {
+    wasClickedOnCharacter(characterss);
   };
+  const offset = Math.floor(Math.random() * (totalCharacters - limit));
+  const url = `https://gateway.marvel.com:443/v1/public/characters?apikey=27bdb1fe4071f56de731760787b2d82f&limit=${limit}&offset=${offset}`;
+
   useEffect(() => {
-    fetch(
-      "https://gateway.marvel.com:443/v1/public/characters?apikey=27bdb1fe4071f56de731760787b2d82f"
-    )
+    fetch(url)
       .then((response) => response.json())
       .then((json) => {
         const ids = json.data.results.map((result) => result.id);
-        setCharacterIds(ids.slice(0, 5));
+        setCharacterIds(ids.slice(0, 30));
       });
   }, []);
 
@@ -40,7 +42,13 @@ const CharList = ({ id, onCharClick }) => {
             <img
               src={character.data.results[0].thumbnail.path + `.jpg`}
               alt={character.data.results[0].name}
-              onClick={() => handleImageClick(character.data.results[0].name)}
+              onClick={() =>
+                wasClickedOnImageCharacter({
+                  name: character.data.results[0].name,
+                  description: character.data.results[0].description,
+                  thumbnail: character.data.results[0].thumbnail.path + `.jpg`,
+                })
+              }
             />
             <div className="char__name">{character.data.results[0].name}</div>
           </li>
