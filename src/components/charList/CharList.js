@@ -46,6 +46,7 @@ const CharList = ({ id, wasClickedOnCharacter }) => {
                 wasClickedOnImageCharacter({
                   name: character.data.results[0].name,
                   description: character.data.results[0].description,
+                  thumbnail: character.data.results[0].thumbnail.path + `.jpg`,
                 })
               }
             />

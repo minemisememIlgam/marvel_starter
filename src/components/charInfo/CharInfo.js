@@ -20,6 +20,7 @@ const CharInfo = ({ selectedCharacters }) => {
     <div>
       {selectedCharacters ? (
         <div>
+          <img src={selectedCharacters.thumbnail} width={150} height={150} />
           <p> Selected character is {selectedCharacters.name} </p>
           <p> {selectedCharacters.description} </p>
         </div>
