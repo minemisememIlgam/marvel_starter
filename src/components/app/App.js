@@ -8,19 +8,18 @@ import decoration from "../../resources/img/vision.png";
 
 const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
 const App = () => {
-  const [selectedChar, setSelectedChar] = useState(null);
-  const handleCharClick = (char) => {
-    setSelectedChar(char);
+  const [selectedCharacter, setSelectedCharacter] = useState(null);
+  const wasClicked = (characterss) => {
+    setSelectedCharacter(characterss);
   };
-
   return (
     <div className="app">
       <AppHeader />
       <main>
         <RandomChar id={id} />
         <div className="char__content">
-          <CharList id={id} onCharClick={handleCharClick} />
-          <CharInfo selectChar={selectedChar} />
+          <CharList id={id} wasClickedOnCharacter={wasClicked} />
+          <CharInfo selectedCharacters={selectedCharacter} />
         </div>
         <img className="bg-decoration" src={decoration} alt="vision" />
       </main>

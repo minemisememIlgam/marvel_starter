@@ -3,7 +3,7 @@ import "./charInfo.scss";
 
 import thor from "../../resources/img/thor.jpeg";
 
-const CharInfo = ({ selectChar }) => {
+const CharInfo = ({ selectedCharacters }) => {
   const [thor, setThor] = useState(null);
   const [thorDescription, setThorDescription] = useState(null);
   useEffect(() => {
@@ -18,13 +18,13 @@ const CharInfo = ({ selectChar }) => {
   }, []);
   return (
     <div>
-      {selectChar ? (
+      {selectedCharacters ? (
         <div>
-          <h2>{selectChar}</h2>
-          <p>Description of {selectChar}</p>
+          <p> Selected character is {selectedCharacters.name} </p>
+          <p> {selectedCharacters.description} </p>
         </div>
       ) : (
-        <p>Select a character to see more information</p>
+        <p> Choose an character </p>
       )}
     </div>
   );
